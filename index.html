@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .header{
+            background-color: rgb(44, 54, 207);
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .inputArea{
+            display: flex;
+            justify-content: center;
+        }
+        input{
+            width: 60%;
+            height: 40px;
+            font-size: 18dp;
+            padding-left: 10px;
+            border: solid 8px white;
+        }
+        .addBtn{
+            background-color: rgb(255, 136, 0);
+            height: inherit;
+            width: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        li{
+            cursor: pointer;
+            display: flex;
+            background-color: #ececec;
+            font-size: 18px;
+            transition: .2s;
+        }
+        li:hover{            
+            background-color: #b4b2b2;
+        }
+        li.checked{
+            background-color: #b4b2b2;
+        }
+        li.checked .list{            
+            text-decoration: line-through;
+        }
+        li div{            
+            padding: 20px 15px;
+        }
+        li div:first-child{
+            width: calc(100% - 20px);
+        }
+        .close{
+            cursor: pointer;
+            width: 20px;
+            text-align: center;
+            transition: .2s;
+        }
+        .close:hover{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="myDIV" class="header">
+        <h2 style="margin:5px">My To Do List</h2>
+        <div class="inputArea">
+            <input type="text" id="myInput" placeholder="Title...">
+            <div onclick="newElement()" class="addBtn">Add</div>
+        </div>
+    </div>
+    <ul id="myUL">
+        <li class="liStrike" onclick="strike()">
+            <div class="list">Hit the gym</div>
+            <div class="close" onclick="remove()">x</div>
+        </li>
+        <li class="liStrike checked" onclick="strike()">
+            <div class="list">Pay bills</div>
+            <div class="close" onclick="remove()">x</div>
+        </li>
+        <li class="liStrike" onclick="strike()">
+            <div class="list">Meet George</div>
+            <div class="close" onclick="remove()">x</div>
+        </li>
+        <li class="liStrike" onclick="strike()">
+            <div class="list">eggs</div> 
+            <div class="close" onclick="remove()">x</div>
+        </li>
+        <li class="liStrike" onclick="strike()">
+            <div class="list">Read a book</div>
+            <div class="close" onclick="remove()">x</div>
+        </li>
+        <li class="liStrike" onclick="strike()">
+            <div class="list">Organize office</div>
+            <div class="close" onclick="remove()">x</div>
+        </li>
+    </ul>
+
+    <script>
+        var close = document.getElementsByClassName("close");
+        var i;       
+        for (i = 0; i < close.length; i++) {
+            close[i].onclick = function() {
+                var div = this.parentElement;
+                div.style.display = "none";
+            }
+        }
+        
+        function remove(){  
+            var div = this.parentElement;
+            div.style.display = "none";
+        }
+
+
+        var liStrike = document.getElementsByClassName("liStrike");       
+        for (i = 0; i < liStrike.length; i++) {
+            liStrike[i].onclick = function() {
+               this.classList.toggle('checked');
+            }
+        }
+       
+        function strike(){         
+           this.classList.toggle('checked');
+        }
+
+
+        function newElement() {
+            var li = document.createElement("li");
+            var divfirst = document.createElement("div");
+            var divsec = document.createElement("div");
+            var inputValue = document.getElementById("myInput").value;
+
+            li.className = 'liStrike';
+            li.onclick = strike;
+
+            divfirst.className = 'list';            
+            divsec.innerHTML =  'x';
+            divsec.className = 'close';
+            divsec.onclick = remove;            
+            
+            divfirst.textContent = inputValue;
+            li.appendChild(divfirst);
+            li.appendChild(divsec);
+            if (inputValue === '') {
+                alert("You must write something!");
+            } else {
+                document.getElementById("myUL").appendChild(li);
+            }
+            document.getElementById("myInput").value = "";
+        }
+    </script>
+</body>
+</html>
